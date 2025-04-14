@@ -1,12 +1,17 @@
 package com.example.androidpjt.adapter;
 
+import android.Manifest;
 import android.app.Activity;
-import android.view.View;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidpjt.DetailActivity;
 import com.example.androidpjt.R;
 import com.example.androidpjt.databinding.ItemMainRvBinding;
 import com.example.androidpjt.model.Student;
@@ -47,6 +52,31 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         holder.binding.itemIv.setOnClickListener(v -> {
             DialogUtil.showCustomDialog(context, R.drawable.ic_student_large);
         });
+        holder.binding.itemCallBtn.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(context,
+                    Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                callPhone(student.getPhone());
+            } else {
+                DialogUtil.showToast(context, context.getString(R.string.permission_denied));
+            }
+        });
+
+        holder.binding.itemNameTv.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("id", student.getId());
+
+            context.startActivity(intent);
+        });
+
+    }
+
+    private void callPhone(String phone) {
+        if (phone != null && !phone.equals("")) {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+            context.startActivity(intent);
+        } else {
+            DialogUtil.showToast(context, context.getString(R.string.main_list_phone_error));
+        }
     }
 
     @Override

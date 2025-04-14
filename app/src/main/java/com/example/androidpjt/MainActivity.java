@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     Intent intent = result.getData();
-                    int id = intent.getIntExtra("id", 0);
+                    int id = (int)intent.getLongExtra("id", 0);
                     String name = intent.getStringExtra("name");
                     String email = intent.getStringExtra("email");
                     String phone = intent.getStringExtra("phone");
