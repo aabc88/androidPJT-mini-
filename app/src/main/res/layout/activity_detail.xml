@@ -34,6 +34,19 @@
         app:layout_constraintTop_toBottomOf="@+id/tb_1"
         app:srcCompat="@drawable/ic_student_small" />
 
+    <com.example.androidpjt.custom.DonutView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/dn_score"
+        app:max = "100"
+        app:value = "10"
+        app:progressColor="@android:color/holo_red_dark"
+        app:backgroundColor = "@android:color/black"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -79,6 +92,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
+
+    <Button
+        android:id="@+id/btn_score_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outline_button"
+        android:minHeight="30dp"
+        android:padding="1dp"
+        android:text="Score chart"
+        android:textColor="#555555"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_score" />
+
+    <Button
+        android:id="@+id/btn_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outline_button"
+        android:minHeight="30dp"
+        android:padding="1dp"
+        android:text="memo"
+        android:textColor="#555555"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_add_score"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_score" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_score"

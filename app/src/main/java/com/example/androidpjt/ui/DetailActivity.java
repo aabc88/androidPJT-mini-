@@ -37,6 +37,8 @@ public class DetailActivity extends AppCompatActivity {
     ArrayList<Map<String, String>> datas = new ArrayList<>();
     DetailAdapter adapter;
     ActivityResultLauncher<Intent> requestGalleryLauncher;
+    int sum = 0;
+    int idx = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,12 @@ public class DetailActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        binding.btnScoreChart.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChartActivity.class);
+            intent.putExtra("id", student.getId());
+            startActivity(intent);
         });
 
         //actionbar > toolbar
@@ -63,6 +71,8 @@ public class DetailActivity extends AppCompatActivity {
         //초기 액티비티가 실행되면서 db select해서 시험점수를 목록으로 출력
         setInitScoreData(id);
 
+        //도넛뷰
+
         ActivityResultLauncher<Intent> addScoreLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -75,9 +85,10 @@ public class DetailActivity extends AppCompatActivity {
                     Date d = new Date(date);
                     SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
                     map.put("date", sd.format(date));
-
                     datas.add(map);
-                    //
+                    idx++;
+                    sum += Integer.parseInt(score);
+                    setDonutValue();
                     adapter.notifyDataSetChanged();
                 }
         );
@@ -130,16 +141,29 @@ public class DetailActivity extends AppCompatActivity {
         while (c.moveToNext()) {
             HashMap<String, String> map = new HashMap<>();
             map.put("score", c.getString(0));
+            sum += Integer.parseInt(c.getString(0));
+            idx++;
             Date d = new Date(Long.parseLong(c.getString(1)));
             SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
             map.put("date", sd.format(d));
             datas.add(map);
         }
         db.close();
+
+
+        setDonutValue();
         binding.rvScore.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DetailAdapter(this, datas);
         binding.rvScore.setAdapter(adapter);
         binding.rvScore.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    private void setDonutValue() {
+        if (idx > 0) {
+            binding.dnScore.setValue(sum /idx);
+        } else {
+            binding.dnScore.setValue(0);
+        }
     }
 
     private void setInitStudentDate(int id) {
