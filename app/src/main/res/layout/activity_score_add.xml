@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:columnCount="4"
     android:orientation="horizontal"
-    tools:context=".ScoreAddActivity">
+    tools:context=".ui.ScoreAddActivity">
 
     <TextView
         android:id="@+id/tv_key_edit"

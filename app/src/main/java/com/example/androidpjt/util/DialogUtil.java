@@ -1,11 +1,13 @@
 package com.example.androidpjt.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Person;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.widget.Toast;
@@ -18,6 +20,10 @@ public class DialogUtil {
     //여러곳에서 사용하는 코드의 중복을 피하기 위한 목적이므로 필요한곳에서 호출하겠단 의도
     public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void logD(String log, String activity) {
+        Log.d(activity, "log: "+log);
     }
 
     public static void showCustomDialog(Context context, int defaultResId) {

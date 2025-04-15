@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.ViewGroup;
 
@@ -11,10 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidpjt.DetailActivity;
+import com.example.androidpjt.ui.DetailActivity;
 import com.example.androidpjt.R;
 import com.example.androidpjt.databinding.ItemMainRvBinding;
 import com.example.androidpjt.model.Student;
+import com.example.androidpjt.util.BitmapUtil;
 import com.example.androidpjt.util.DialogUtil;
 
 import java.util.ArrayList;
@@ -30,12 +32,21 @@ class MainViewHolder extends RecyclerView.ViewHolder {
 }
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
-    ArrayList<Student> datas;
+    ArrayList<Student> originalData;
+    ArrayList<Student> filteredData;
+
     Activity context;
 
-    public MainAdapter(Activity context, ArrayList<Student> datas) {
+
+    public MainAdapter(Activity context, ArrayList<Student> originalData) {
         this.context = context;
-        this.datas = datas;
+        this.originalData = originalData;
+        this.filteredData = originalData;
+    }
+
+    public void setFilteredData(ArrayList<Student> newList) {
+        this.filteredData = newList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -47,7 +58,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
-        Student student = datas.get(position);
+        Student student = filteredData.get(position);
         holder.binding.itemNameTv.setText(student.getName());
         holder.binding.itemIv.setOnClickListener(v -> {
             DialogUtil.showCustomDialog(context, R.drawable.ic_student_large);
@@ -67,7 +78,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
             context.startActivity(intent);
         });
-
+        Bitmap bitmap = BitmapUtil.getGalleryBitmapFromFile(context, student.getPhoto());
+        if (bitmap != null) {
+            holder.binding.itemIv.setImageBitmap(bitmap);
+        }
     }
 
     private void callPhone(String phone) {
@@ -81,7 +95,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return filteredData.size();
     }
+
+
 }
 

@@ -6,23 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.MainActivity">
+
+
+    <!-- edittext의 포커스를 잃기 위한 속성-->
+
 
     <!-- menu는 actionbar의 구성요소이며 기본으로 적용되는 theme가noactionbar이다
     theme를 변경해서 actionbar가 나오게 하거나  Toolbar라는 뷰가 제공된다. actionbar를 대체하기 위한 뷰이다
     개발자가 뷰로 제어 activity window영역의 content부분에 뷰로 직접 준비.
     platform api도 제공되지만 하위호환성 문제가 있어 androidx로 이용-->
     <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tb_1"
-
-        />
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/rv_1"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

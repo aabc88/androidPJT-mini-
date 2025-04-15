@@ -1,4 +1,4 @@
-package com.example.androidpjt;
+package com.example.androidpjt.ui;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.androidpjt.R;
 import com.example.androidpjt.databinding.ActivityAddStudentBinding;
 import com.example.androidpjt.db.DBHelper;
 import com.example.androidpjt.util.DialogUtil;

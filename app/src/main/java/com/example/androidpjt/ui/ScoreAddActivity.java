@@ -1,4 +1,4 @@
-package com.example.androidpjt;
+package com.example.androidpjt.ui;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,9 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.androidpjt.R;
 import com.example.androidpjt.databinding.ActivityScoreAddBinding;
 import com.example.androidpjt.db.DBHelper;
-import com.example.androidpjt.util.DialogUtil;
 
 public class ScoreAddActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityScoreAddBinding binding;

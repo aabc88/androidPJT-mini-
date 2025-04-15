@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-        <item
-            android:id="@+id/menu_main_add"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="add"
-            app:showAsAction="always"
-            />
+    <item
+        android:id="@+id/menu_main_add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="add"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_et_search"
+        android:title="Search"
+        android:visible="false"
+        app:actionLayout="@layout/layout_search_view"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_main_close"
+        android:icon="@drawable/ic_close"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_main_search"
+        android:icon="@drawable/ic_menu_search"
+        android:title="search"
+        app:showAsAction="always" />
+
 </menu>

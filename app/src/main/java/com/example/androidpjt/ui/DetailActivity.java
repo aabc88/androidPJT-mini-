@@ -1,4 +1,4 @@
-package com.example.androidpjt;
+package com.example.androidpjt.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.androidpjt.R;
 import com.example.androidpjt.adapter.DetailAdapter;
 import com.example.androidpjt.databinding.ActivityDetailBinding;
 import com.example.androidpjt.db.DBHelper;
@@ -51,6 +52,9 @@ public class DetailActivity extends AppCompatActivity {
 
         //actionbar > toolbar
         setSupportActionBar(binding.tb1);
+
+        binding.btnAddScore.setBackgroundTintList(null);
+
         //실행과 동시에 전달한 데이터 추출
         int id = getIntent().getIntExtra("id", 0);
 
@@ -95,20 +99,20 @@ public class DetailActivity extends AppCompatActivity {
                         String[] proj = new String[]{MediaStore.Images.Media.DATA}; //사진경로를 지칭하는 상수
                         Cursor galleryCursor = getContentResolver().query(uri, proj, null, null, null);
 
-                        if(galleryCursor != null) {
+                        if (galleryCursor != null) {
                             if (galleryCursor.moveToFirst()) {
                                 //사진의 경로를 획득
                                 String filePath = galleryCursor.getString(0);
                                 //나중을 위해서 tb_student 테이블에 데이터 저장
                                 DBHelper dbHelper = new DBHelper(this);
                                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                db.execSQL("update tb_student set photo = ? where _id = ?", new String[]{filePath, String.valueOf(student.getId())});
+                                db.execSQL("update tb_student set photo = ? where _id = ?", new String[]{filePath, String.valueOf(id)});
                                 db.close();
                             }
                         }
                         //되돌아오고 화면에 출력하기
                         Bitmap bitmap = BitmapUtil.getGalleryBitmapFromStream(this, uri);
-                        if(bitmap != null) {
+                        if (bitmap != null) {
                             binding.ivDetail.setImageBitmap(bitmap);
                         }
                     } catch (Exception e) {
@@ -158,6 +162,11 @@ public class DetailActivity extends AppCompatActivity {
             student = new Student(cursor.getInt(0), name, email, phone, cursor.getString(5), photoFilePath);
         }
         db.close();
+        //db에 저장된 photo filepath로 화면 출력
+        Bitmap bitmap = BitmapUtil.getGalleryBitmapFromFile(this, photoFilePath);
+        if (bitmap != null) {
+            binding.ivDetail.setImageBitmap(bitmap);
+        }
 
         binding.ivDetail.setOnClickListener(v -> {
             //갤러리에서 사진을 선택하기 위한 인텐트
