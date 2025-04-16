@@ -72,6 +72,14 @@ public class DetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.btnMemo.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            System.out.println(binding.tvPhone.getText().toString());
+            intent.setData(Uri.parse("smsto:"+binding.tvPhone.getText().toString()));
+            intent.putExtra("sms_body","score : "+datas.get(datas.size() - 1).get("date")+"  "+datas.get(datas.size() - 1).get("score"));
+            startActivity(intent);
+        });
+
         //도넛뷰
 
         ActivityResultLauncher<Intent> addScoreLauncher = registerForActivityResult(
