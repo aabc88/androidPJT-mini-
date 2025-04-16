@@ -1,6 +1,7 @@
 package com.example.androidpjt.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
@@ -19,8 +20,12 @@ import com.example.androidpjt.R;
 import com.example.androidpjt.databinding.ActivityChartBinding;
 import com.example.androidpjt.util.DialogUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class ChartActivity extends AppCompatActivity {
     ActivityChartBinding binding;
+    ArrayList<HashMap<String, String>> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,10 @@ public class ChartActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        data = (ArrayList<HashMap<String, String>>) intent.getSerializableExtra("chartScore");
+        binding.chartTvName.setText(intent.getStringExtra("name"));
 
         WebSettings settings = binding.chartWb.getSettings();
         settings.setJavaScriptEnabled(true); // 자바스크립트 허용
@@ -59,9 +68,13 @@ public class ChartActivity extends AppCompatActivity {
         public String getChartData() {
             StringBuffer sb = new StringBuffer();
             sb.append("[");
-            for (int i = 0; i < 14; i++) {
-                sb.append("[" + i + "," + Math.sin(i) + "]");
-                if (i < 13)
+            for (int i = 0; i < data.size(); i++) {
+                HashMap<String, String > map = data.get(i);
+                String scoreStr = map.get("score");
+                int score = Integer.parseInt(scoreStr);
+
+                sb.append("[" + i + "," + score + "]");
+                if (i < data.size() - 1)
                     sb.append(",");
             }
             sb.append("]");

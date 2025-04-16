@@ -52,12 +52,6 @@ public class DetailActivity extends AppCompatActivity {
             return insets;
         });
 
-        binding.btnScoreChart.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChartActivity.class);
-            intent.putExtra("id", student.getId());
-            startActivity(intent);
-        });
-
         //actionbar > toolbar
         setSupportActionBar(binding.tb1);
 
@@ -70,6 +64,13 @@ public class DetailActivity extends AppCompatActivity {
 
         //초기 액티비티가 실행되면서 db select해서 시험점수를 목록으로 출력
         setInitScoreData(id);
+
+        binding.btnScoreChart.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChartActivity.class);
+            intent.putExtra("name", binding.tvName.getText().toString());
+            intent.putExtra("chartScore", datas);
+            startActivity(intent);
+        });
 
         //도넛뷰
 
