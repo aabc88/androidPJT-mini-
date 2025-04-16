@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     MainAdapter adapter;
     MenuItem etSearch;
     LayoutSearchViewBinding searchViewBinding;
+    private long backPressedTime = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         searchViewBinding.editSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO) {
                 hideKeyboard(v);
@@ -182,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     @Override
@@ -238,12 +237,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //뒤로가기 버튼으로 EditText 포커스해제 o
+    //뒤로가기 두번 눌러 앱 종료 o
     @Override
     public void onBackPressed() {
         if (etSearch != null && etSearch.isVisible()) {
             hideSearchEdit();
         } else {
-            super.onBackPressed();
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - backPressedTime < 2000) {
+                super.onBackPressed();
+
+            } else {
+                backPressedTime = currentTime;
+                DialogUtil.showToast(this, "한번 더 누르면 종료됩니다.");
+            }
         }
     }
 }
