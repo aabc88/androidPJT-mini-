@@ -19,6 +19,7 @@ import com.example.androidpjt.model.Student;
 import com.example.androidpjt.util.BitmapUtil;
 import com.example.androidpjt.util.DialogUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 
 class MainViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +62,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         Student student = filteredData.get(position);
         holder.binding.itemNameTv.setText(student.getName());
         holder.binding.itemIv.setOnClickListener(v -> {
-            DialogUtil.showCustomDialog(context, R.drawable.ic_student_large);
+            if(student.getPhoto() == null)  DialogUtil.showCustomDialog(context, R.drawable.ic_student_large);
+            else DialogUtil.showCustomDialog(context, student.getPhoto());
+
         });
         holder.binding.itemCallBtn.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(context,

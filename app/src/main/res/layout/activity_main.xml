@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
 
@@ -21,9 +21,9 @@
     platform api도 제공되지만 하위호환성 문제가 있어 androidx로 이용-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_1"
-        android:focusable="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:focusable="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_1"
